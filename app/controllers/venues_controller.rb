@@ -1,16 +1,14 @@
 class VenuesController < ApplicationController
-
   def index
     matching_venues = Venue.all
     @venues = matching_venues.order(:created_at)
-
     render({ :template => "venues/venue_list" })
   end
 
   def show
     venue_id = params.fetch("id")
     @the_venue = Venue.find(venue_id)
-
+    @comments = @the_venue.comments
     render({ :template => "venues/details" })
   end
 
@@ -45,7 +43,7 @@ class VenuesController < ApplicationController
     the_id = params.fetch("id")
     @venue = Venue.find(the_id)
     @venue.destroy
-
     redirect_to("/venues")
   end
 end
+

@@ -13,8 +13,12 @@
 class Comment < ApplicationRecord
   validates(:commenter, { :presence => true })
 
+  belongs_to :venue
+  belongs_to :author, class_name: "User", foreign_key: "author_id"
+
+
   def commenter
-    my_id = self.id
+    my_id = self.author_id
     
     matching_users = User.where({ :id => my_id })
 
